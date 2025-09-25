@@ -16,6 +16,28 @@ public class FollowCam : MonoBehaviour{
     void Awake(){
         camZ = this. transform.position.z;
     }
+    [Header("Dynamic")]
+     public float camZ; // The desired Z pos of the camera 
+ 
+     void Awake() {
+         camZ = this.transform.position.z;
+     }
+ 
+     void FixedUpdate () {
+         // A single-line if statement doesn’t require braces
+         if (POI == null) return; // if there is no POI, then return           // b
+ 
+         // Get the position of the poi
+         Vector3 destination = POI.transform.position;
+         // Force destination.z to be camZ to keep the camera far enough away
+         destination.z = camZ;
+         // Set the camera to the destination
+         transform.position = destination;
+     }
+
+     // void Start() {…}  // Please delete the unused Start() and Update() methods
+     // void Update() {…}
+ }
 
     void FixedUpdate(){
         Vector3 destination = Vector3.zero;
