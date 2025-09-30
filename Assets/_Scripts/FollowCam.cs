@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowCam : MonoBehaviour{
+public class FollowCam : MonoBehaviour
+{
     static public GameObject POI;
 
     [Header("Inscribed")]
@@ -13,50 +14,30 @@ public class FollowCam : MonoBehaviour{
     [Header("Dynamic")]
     public float camZ;
 
-    void Awake(){
-        camZ = this. transform.position.z;
+    void Awake()
+    {
+        camZ = this.transform.position.z;
     }
-    [Header("Dynamic")]
-     public float camZ; // The desired Z pos of the camera 
- 
-     void Awake() {
-         camZ = this.transform.position.z;
-     }
- 
-     void FixedUpdate () {
-         // A single-line if statement doesn’t require braces
-         if (POI == null) return; // if there is no POI, then return           // b
- 
-         // Get the position of the poi
-         Vector3 destination = POI.transform.position;
-         // Force destination.z to be camZ to keep the camera far enough away
-         destination.z = camZ;
-         // Set the camera to the destination
-         transform.position = destination;
-     }
 
-     // void Start() {…}  // Please delete the unused Start() and Update() methods
-     // void Update() {…}
- }
+    void FixedUpdate()
+    {
+        // A single-line if statement doesn’t require braces
+        if (POI == null) return; // if there is no POI, then return           // b
 
-    void FixedUpdate(){
-        Vector3 destination = Vector3.zero;
+        // Get the position of the poi
+        Vector3 destination = POI.transform.position;
+        // Force destination.z to be camZ to keep the camera far enough away
+        destination.z = camZ;
+        // Set the camera to the destination
+        transform.position = destination;
 
-        if(POI!= null){
 
-            Rigidbody poiRigid = POI.GetComponent<Rigidbody>();
-            if ((poiRigid != null) && poiRigid.IsSleeping()){
-                POI = null;
-            }
-        }
+        // void Start() {…}  // Please delete the unused Start() and Update() methods
+        // void Update() {…}
 
-        if(POI != null){
-            destination = POI.transform.position;
-        }
-    //    if(POI == null) return;
 
-    //    Vector3 destination = POI.transform.position;
-    
+        //    Vector3 destination = POI.transform.position;
+
         destination.x = Mathf.Max(minXY.x, destination.x);
         destination.y = Mathf.Max(minXY.y, destination.y);
 
@@ -68,4 +49,5 @@ public class FollowCam : MonoBehaviour{
 
         Camera.main.orthographicSize = destination.y + 10;
     }
+
 }

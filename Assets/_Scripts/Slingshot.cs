@@ -41,7 +41,7 @@ public class Slingshot : MonoBehaviour{
     projectile.transform.position = launchPos;
 
     projectile.GetComponent<Rigidbody>().isKinematic = true;
- }
+   }
  void Update(){
 
     if (!aimingMode) return;
@@ -74,3 +74,4 @@ public class Slingshot : MonoBehaviour{
     }
  }
 }
+
