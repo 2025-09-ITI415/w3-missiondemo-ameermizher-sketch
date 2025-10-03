@@ -70,6 +70,7 @@ public class Slingshot : MonoBehaviour{
         projRB.linearVelocity = -mouseDelta * velocityMult;
         FollowCam.POI = projectile;
         Instantiate<GameObject>(projLinePrefab, projectile.transform);
+        MissionDemolition.SHOT_FIRED();
         projectile = null;
     }
  }

@@ -4,26 +4,24 @@ using UnityEngine;
 
 public class FollowCam : MonoBehaviour
 {
-    static public FollowCam S;           // Singleton
+    static private FollowCam S;           // Singleton
     static public GameObject POI;        // Point of Interest
 
     [Header("Inscribed")]
     public float easing = 0.05f;
     public Vector2 minXY = Vector2.zero;
-
     public GameObject viewBothGO;
 
     [Header("Dynamic")]
     public float camZ;
-
     public eView nextView = eView.slingshot;
 
     public enum eView
     {
+        none,
         slingshot,
         castle,
-        both,
-        none
+        both  
     }
 
     private eView view = eView.slingshot;
@@ -36,15 +34,19 @@ public class FollowCam : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (POI == null) return;
+        Vector3 destination = Vector3.zero;
 
-        Vector3 destination = POI.transform.position;
-
-        Rigidbody poiRigid = POI.GetComponent<Rigidbody>();
-        if ((poiRigid != null) && poiRigid.IsSleeping())
+        if (POI != null)
         {
-            POI = null;
-            return;
+            Rigidbody poiRigid = POI.GetComponent<Rigidbody>();
+            if ((poiRigid != null) && poiRigid.IsSleeping())
+            {
+                POI = null; 
+            }
+        }
+
+        if (POI != null) {
+            destination = POI.transform.position;
         }
 
         destination.x = Mathf.Max(minXY.x, destination.x);
@@ -62,8 +64,10 @@ public class FollowCam : MonoBehaviour
     public void SwitchView(eView newView)
     {
          if ( newView == eView.none ) {
-             newView = nextView;
+             view = nextView;
          }
+
+        Debug.Log("at start nextView View is: " + nextView);
 
         switch (view)
         {
@@ -82,8 +86,10 @@ public class FollowCam : MonoBehaviour
                 nextView = eView.slingshot;
                 break;
         }
+        Debug.Log("at end nextView is: " + nextView);
     }
-    public void SwitchView() {                                                  // i
+    public void SwitchView() {
+        Debug.Log("Switch View Called - No Param");// i
          SwitchView( eView.none );
      }
  
